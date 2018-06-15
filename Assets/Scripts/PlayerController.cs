@@ -4,8 +4,8 @@ using UnityEngine;
 
 public abstract class PlayerController : MonoBehaviour, IGameManager {
 
-    public GameObject planetPrefab;
-    public GameObject AttractorsObj;
+    //public GameObject planetPrefab;
+    //public GameObject AttractorsObj;
 
     private ManagerState _state;
 
@@ -24,7 +24,7 @@ public abstract class PlayerController : MonoBehaviour, IGameManager {
     }
 
     public void Startup() {
-        AttractorsObj = GameObject.Find("Attractors");
+        //AttractorsObj = GameObject.Find("Attractors");
         _state = ManagerState.STARTED;
     }
 
