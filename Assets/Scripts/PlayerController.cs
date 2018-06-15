@@ -20,6 +20,7 @@ public abstract class PlayerController : MonoBehaviour, IGameManager {
 
     private void Awake() {
         _state = ManagerState.NOT_STARTED;
+		Startup ();
     }
 
     public void Startup() {

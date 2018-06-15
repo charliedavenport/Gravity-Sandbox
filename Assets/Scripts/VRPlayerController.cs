@@ -14,7 +14,7 @@ public class VRPlayerController : PlayerController {
 	public Transform handR;
 
 	//public GameObject planetPrefab;
-	//public GameObject AttractorsObj;
+	public GameObject AttractorsObj;
 
 	private bool a_btn_down;
     private bool a_btn_up;
