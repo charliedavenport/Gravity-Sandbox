@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VRPlayerController : MonoBehaviour {
+public class VRPlayerController : PlayerController {
 
 	public GameObject SteamVR_Rig;
 	public SteamVR_TrackedObject hmd;
@@ -13,15 +13,15 @@ public class VRPlayerController : MonoBehaviour {
 	public Transform handL;
 	public Transform handR;
 
-	public GameObject planetPrefab;
-	public GameObject GravitationalBodies;
+	//public GameObject planetPrefab;
+	//public GameObject AttractorsObj;
 
 	private bool a_btn_down;
 	private float triggerL;
 	private float triggerR;
 
 	private void Awake() {
-		GravitationalBodies = GameObject.Find ("Gravitational Bodies");
+		//AttractorsObj = GameObject.Find ("Gravitational Bodies");
 	}
 
 	private void Update() {
@@ -59,8 +59,8 @@ public class VRPlayerController : MonoBehaviour {
 	}
 
 	private void spawnPlanet(Vector3 pos) {
-		GameObject.Instantiate (planetPrefab, pos, Quaternion.identity, GravitationalBodies.transform);
-		List<Attractor> attrList = new List<Attractor> (GravitationalBodies.GetComponentsInChildren<Attractor> ());
+		GameObject.Instantiate (planetPrefab, pos, Quaternion.identity, AttractorsObj.transform);
+		List<Attractor> attrList = new List<Attractor> (AttractorsObj.GetComponentsInChildren<Attractor> ());
 		foreach (Attractor attr in attrList) {
 			attr.updateList ();
 		}
