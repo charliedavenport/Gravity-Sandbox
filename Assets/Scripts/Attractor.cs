@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Attractor : MonoBehaviour {
 
-	const float G_CONST = 1e-2f; // no need to use real physical value. Tune to make it 'feel' right
+	const float G_CONST = 2e-2f; // no need to use real physical value. Tune to make it 'feel' right
 
 	public Rigidbody rb;
 
@@ -13,9 +13,9 @@ public class Attractor : MonoBehaviour {
 	public List<Attractor> attrList;
 
 	private void Start() {
-		rb = GetComponent<Rigidbody> ();
-		attrListObj = GameObject.Find ("Gravitational Bodies");
-		attrList = new List<Attractor> (attrListObj.GetComponentsInChildren<Attractor> ());
+		rb = GetComponent<Rigidbody>();
+		attrListObj = GameObject.Find("Attractors");
+		attrList = new List<Attractor>(attrListObj.GetComponentsInChildren<Attractor>());
 	}
 
 	private void FixedUpdate() {
@@ -23,7 +23,7 @@ public class Attractor : MonoBehaviour {
 			return;
 
 		foreach (Attractor attr in attrList) {
-			if (attr != this)
+			if (attr != this && attr != null)
 				Attract (attr);
 
 		}

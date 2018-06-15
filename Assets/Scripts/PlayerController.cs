@@ -23,7 +23,7 @@ public abstract class PlayerController : MonoBehaviour, IGameManager {
     }
 
     public void Startup() {
-        AttractorsObj = GameObject.Find("Gravitational Bodies");
+        AttractorsObj = GameObject.Find("Attractors");
         _state = ManagerState.STARTED;
     }
 
