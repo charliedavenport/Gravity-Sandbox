@@ -50,6 +50,7 @@ public class Attractor : MonoBehaviour {
 	}
 
 	private void Merge(Attractor other){
+        // momentum is conserved
 		float m1 = this.rb.mass;
 		float m2 = other.rb.mass;
 		Vector3 v1 = this.rb.velocity;
@@ -61,16 +62,40 @@ public class Attractor : MonoBehaviour {
 
 	}
 
+    private void ElasticCollision(Attractor other)
+    {
+        // https://en.wikipedia.org/wiki/Elastic_collision
+        // need to conserve both KE and momentum
+        Vector3 v1 = this.rb.velocity;
+        Vector3 v2 = other.rb.velocity;
+        Vector3 x1 = this.transform.position;
+        Vector3 x2 = other.transform.position;
+        float m1 = this.rb.mass;
+        float m2 = other.rb.mass;
 
-	void OnCollisionEnter(Collision other) {
+        // Vectorized equation from bottom of wiki page
+        this.rb.velocity = v1 - ((2 * m2 / (m1 + m2)) * Vector3.Dot((v1 - v2), (x1 - x2)) / Mathf.Pow((x1 - x2).magnitude, 2)) * (x1 - x2);
+
+    }
+
+    void OnCollisionEnter(Collision other) {
 		if (other.gameObject.tag == "Attractor") {
-			Rigidbody otherRB = other.gameObject.GetComponent<Rigidbody> ();
+			Rigidbody otherRB = other.gameObject.GetComponent<Rigidbody>();
+            float relativeSpeedThreshold = 0.5f;
+            if ((otherRB.velocity - this.rb.velocity).magnitude > relativeSpeedThreshold)
+            {
+                ElasticCollision(other.gameObject.GetComponent<Attractor>());
+                
+            }
+
 			if (this.rb.mass > otherRB.mass) { // prefer the most massive body
 				Merge(other.gameObject.GetComponent<Attractor>());
 			}
-			else if (this.rb.mass == otherRB.mass && this.transform.position.z > other.transform.position.z) { // randomly pick one planet. not the most elegant solution but it seems to work
-				Merge(other.gameObject.GetComponent<Attractor>());
+			else if (this.rb.mass == otherRB.mass && this.transform.position.z > other.transform.position.z) {
+                // randomly pick one planet. not the most elegant solution but it seems to work
+                Merge(other.gameObject.GetComponent<Attractor>());
 			}
+            // if they both have the exact same z coordinate, then nothing happens
 
 		}
 	}

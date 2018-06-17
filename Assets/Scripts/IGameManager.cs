@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IGameManager {
 
-    ManagerState State { get; set; }
+    ManagerStatus status { get; }
 
     void Startup();
 }

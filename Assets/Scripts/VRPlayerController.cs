@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VRPlayerController : PlayerController {
+public class VRPlayerController : MonoBehaviour, IGameManager {
 
 	public GameObject SteamVR_Rig;
 	public SteamVR_TrackedObject hmd;
@@ -16,10 +16,19 @@ public class VRPlayerController : PlayerController {
 	public GameObject planetPrefab;
 	public GameObject AttractorsObj;
 
+    // IGameManager
+    public ManagerStatus status { get; private set; }
+
 	private bool a_btn_down;
     private bool a_btn_up;
 	private float triggerL;
 	private float triggerR;
+
+    // IGameManager
+    public void Startup()
+    {
+
+    }
 
 	private void Awake() {
 		AttractorsObj = GameObject.Find ("Attractors");
