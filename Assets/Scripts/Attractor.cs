@@ -44,7 +44,7 @@ public class Attractor : MonoBehaviour {
 
 		foreach (Attractor attr in attrList) {
 			if (attr != this && attr != null)
-				Attract (attr);
+				Attract (attr); // inefficient. Each pair of Attractors calculates force between them twice
 
 		}
 	}
@@ -75,7 +75,7 @@ public class Attractor : MonoBehaviour {
 
         // Vectorized equation from bottom of wiki page
         this.rb.velocity = v1 - ((2 * m2 / (m1 + m2)) * Vector3.Dot((v1 - v2), (x1 - x2)) / Mathf.Pow((x1 - x2).magnitude, 2)) * (x1 - x2);
-
+        // only update this rigidbody's velocity; both Attractors will call this method from the OnCollisionEnter event
     }
 
     void OnCollisionEnter(Collision other) {
