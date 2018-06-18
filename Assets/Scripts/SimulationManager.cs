@@ -45,6 +45,19 @@ public class SimulationManager : MonoBehaviour, IGameManager {
         
     }
 
+    private Vector3 computeForce(Attractor attr1, Attractor attr2) {
+        Rigidbody rb1 = attr1.rb,
+            rb2 = attr2.rb;
+        Vector3 displacement = attr1.transform.position - attr2.transform.position;
+        float distance = displacement.magnitude;
+
+        float forceMag = (rb1.mass * rb2.mass) / (distance * distance) * G_CONST;
+        Vector3 force = displacement.normalized * forceMag;
+
+        return force;
+
+    }
+
     private void FixedUpdate() {
         
         // TODO: update ForceMatrix
@@ -54,6 +67,7 @@ public class SimulationManager : MonoBehaviour, IGameManager {
             // on each row, only go up to the main diagonal
             for (int j = 0; j <= i; j++) {
 
+                ForceMatrix[i, j] = computeForce(attrList[i], attrList[j]);
 
             }
         }
